@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💡</text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>&lt;color-scheme-switch&gt; element</title>
+    <style>
+      :root {
+        color-scheme: light-dark;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-weight: 400;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        min-block-size: 100vh;
+      }
+
+      [hidden] {
+        display: none;
+      }
+
+      color-scheme-switch {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+    </style>
+    <script type="module" >
+      import { ColorSchemeSwitchElement } from '/src/index.js?define=false'
+
+      document.addEventListener('color-scheme-switch', event => {
+        const colorScheme = event.target.value;
+
+        // Update page color-scheme
+        document.documentElement.style.setProperty('color-scheme', colorScheme);
+
+        // Update icon
+        event.target.querySelector('.icon use').setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", colorScheme === 'light' ? '#sun' : '#moon');
+
+        // Update button label
+        event.target.setAttribute('aria-label', `Switch to ${colorScheme === 'light' ? 'dark' : 'light'} color scheme`)
+      });
+
+      // Ensure event listener is setup before initial `color-scheme-switch` event gets fired.
+      ColorSchemeSwitchElement.define();
+    </script>
+  </head>
+  <body>
+    <color-scheme-switch value="dark" title="Toggle light & dark color scheme">
+      <svg class="icon" width="24" height="24"><use xlink:href="#sun"></use></svg>
+    </color-scheme-switch>
+
+    <svg width="0" height="0" aria-hidden="true" hidden>
+      <symbol xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" id="sun">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="m4.93 4.93 1.41 1.41"></path>
+        <path d="m17.66 17.66 1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="m6.34 17.66-1.41 1.41"></path>
+        <path d="m19.07 4.93-1.41 1.41"></path>
+      </symbol>
+      <symbol xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" id="moon">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+      </symbol>
+    </svg>
+  </body>
+</html>

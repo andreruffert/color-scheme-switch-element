@@ -1,6 +1,7 @@
 {
   "name": "color-scheme-switch-element",
   "version": "1.0.0-beta.2",
+  "license": "MIT",
   "type": "module",
   "exports": {
     ".": {

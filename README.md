@@ -10,6 +10,8 @@
 - Considers system preference
 - Persist user preference
 
+**[Demo](https://andreruffert.github.io/range-slider-element/)**
+
 ## Installation
 
 ```shell

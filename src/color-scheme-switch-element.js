@@ -11,21 +11,6 @@ export class ColorSchemeSwitchElement extends HTMLElement {
 
   #value;
 
-  #focusHandler = () => {
-    this.addEventListener('keydown', this.#keyboardHandler);
-  };
-
-  #blurHandler = () => {
-    this.removeEventListener('keydown', this.#keyboardHandler);
-  };
-
-  #keyboardHandler = (event) => {
-    if (event.key === ' ' || event.key === 'Enter') {
-      event.preventDefault();
-      this.toggle();
-    }
-  };
-
   get value() {
     return this.#value;
   }
@@ -60,6 +45,21 @@ export class ColorSchemeSwitchElement extends HTMLElement {
     this.addEventListener('focus', this.#focusHandler);
     this.addEventListener('blur', this.#blurHandler);
   }
+
+  #focusHandler = () => {
+    this.addEventListener('keydown', this.#keyboardHandler);
+  };
+
+  #blurHandler = () => {
+    this.removeEventListener('keydown', this.#keyboardHandler);
+  };
+
+  #keyboardHandler = (event) => {
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+      this.toggle();
+    }
+  };
 
   getPageColorScheme() {
     const computedStyle = window.getComputedStyle(document.documentElement);

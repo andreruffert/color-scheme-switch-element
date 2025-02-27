@@ -4,7 +4,7 @@
 
 [![Test status](https://img.shields.io/github/actions/workflow/status/andreruffert/color-scheme-switch-element/test.yml?label=Test&logo=github&color=lightyellow&labelColor=212121)](https://github.com/andreruffert/color-scheme-switch-element/actions/workflows/test.yml)
 [![npm version](https://img.shields.io/npm/v/color-scheme-switch-element?color=lightyellow&labelColor=212121)](https://www.npmjs.com/package/color-scheme-switch-element)
-[![gzip size](https://img.shields.io/badge/gzip-846B-lightyellow?labelColor=212121)](https://pkg-size.dev/color-scheme-switch-element@beta)
+[![gzip size](https://img.shields.io/badge/gzip-846B-lightyellow?labelColor=212121)](https://pkg-size.dev/color-scheme-switch-element@latest)
 [![npm downloads](https://img.shields.io/npm/dm/color-scheme-switch-element?logo=npm&color=lightyellow&labelColor=212121)](https://www.npmjs.com/package/color-scheme-switch-element)
 
 ## Features
@@ -36,7 +36,7 @@ npm install color-scheme-switch-element
     // ...
   });
 </script>
-<script type="module" async blocking="render" src="https://unpkg.com/color-scheme-switch-element@beta/dist/color-scheme-switch-element.js"></script>
+<script type="module" async blocking="render" src="https://unpkg.com/color-scheme-switch-element@latest/dist/color-scheme-switch-element.js"></script>
 ```
 
 <!--

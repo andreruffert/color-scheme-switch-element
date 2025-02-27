@@ -1,3 +1,7 @@
+# [1.0.0](https://github.com/andreruffert/color-scheme-switch-element/compare/v1.0.0-beta.3...v1.0.0) (2025-02-27)
+
+
+
 # [1.0.0-beta.3](https://github.com/andreruffert/color-scheme-switch-element/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2025-02-25)
 
 

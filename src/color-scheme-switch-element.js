@@ -1,5 +1,6 @@
 const DEFAULT_TAG_NAME = 'color-scheme-switch';
 const DEFAULT_STORAGE_KEY = 'color-scheme';
+const KEY_CODES = [' ', 'Enter'];
 
 export class ColorSchemeSwitchElement extends HTMLElement {
   static define(tagName = DEFAULT_TAG_NAME, registry = customElements) {
@@ -55,10 +56,9 @@ export class ColorSchemeSwitchElement extends HTMLElement {
   };
 
   #keyboardHandler = (event) => {
-    if (event.key === ' ' || event.key === 'Enter') {
-      event.preventDefault();
-      this.toggle();
-    }
+    if (!KEY_CODES.includes(event.key)) return;
+    event.preventDefault();
+    this.toggle();
   };
 
   getPageColorScheme() {
@@ -73,7 +73,6 @@ export class ColorSchemeSwitchElement extends HTMLElement {
 
   toggle() {
     if (this.disabled) return;
-
     const currentPreference = this.#value;
     const newPreference = currentPreference === 'dark' ? 'light' : 'dark';
     this.value = newPreference;

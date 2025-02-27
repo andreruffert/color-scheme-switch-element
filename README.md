@@ -5,14 +5,15 @@
 [![Test status](https://img.shields.io/github/actions/workflow/status/andreruffert/color-scheme-switch-element/test.yml?label=Test&logo=github&color=lightyellow&labelColor=212121)](https://github.com/andreruffert/color-scheme-switch-element/actions/workflows/test.yml)
 [![npm version](https://img.shields.io/npm/v/color-scheme-switch-element?color=lightyellow&labelColor=212121)](https://www.npmjs.com/package/color-scheme-switch-element)
 [![gzip size](https://img.shields.io/badge/gzip-846B-lightyellow?labelColor=212121)](https://pkg-size.dev/color-scheme-switch-element@beta)
-<!--[![npm downloads](https://img.shields.io/npm/dm/color-scheme-switch-element?logo=npm&color=lightyellow&labelColor=212121)](https://www.npmjs.com/package/color-scheme-switch-element)-->
+[![npm downloads](https://img.shields.io/npm/dm/color-scheme-switch-element?logo=npm&color=lightyellow&labelColor=212121)](https://www.npmjs.com/package/color-scheme-switch-element)
 
 ## Features
+
 - Toggle between a light and dark color scheme
 - Considers system preference
 - Persist user preference
 
-**[Demo](https://andreruffert.github.io/range-slider-element/)**
+**[Demo](https://andreruffert.github.io/syntax-highlight-element)**
 
 ## Installation
 
@@ -67,7 +68,7 @@ ColorSchemeSwitchElement.define();
 
 ### Events
 
-When initially loaded or after switching the color scheme, a `color-scheme-switch` event is dispatched from the `&lt;color-scheme-switch&gt;` element.
+When initially loaded or after switching the color scheme, a `color-scheme-switch` event is dispatched from the `<color-scheme-switch>` element.
 
 ```js
 document.addEventListener('color-scheme-switch', event => {

@@ -25,15 +25,19 @@ export class ColorSchemeSwitchElement extends HTMLElement {
 
   constructor() {
     super();
+    this.addEventListener('click', this.toggle);
+    this.addEventListener('focus', this.#focusHandler);
+    this.addEventListener('blur', this.#blurHandler);
+  }
+
+  connectedCallback() {
     const systemColorScheme = this.getSystemColorScheme();
     const pageColorScheme = this.getPageColorScheme();
     const isSystem = pageColorScheme === 'light dark';
     const defaultValue = isSystem ? systemColorScheme : pageColorScheme;
     const persistedValue = localStorage.getItem(DEFAULT_STORAGE_KEY);
     this.value = this.getAttribute('value') || persistedValue || defaultValue;
-  }
 
-  connectedCallback() {
     if (!this.hasAttribute('role')) {
       this.setAttribute('role', 'button');
     }
@@ -41,10 +45,6 @@ export class ColorSchemeSwitchElement extends HTMLElement {
     if (!this.hasAttribute('tabindex')) {
       this.setAttribute('tabindex', '0');
     }
-
-    this.addEventListener('click', this.toggle);
-    this.addEventListener('focus', this.#focusHandler);
-    this.addEventListener('blur', this.#blurHandler);
   }
 
   #focusHandler = () => {

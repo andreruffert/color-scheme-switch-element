@@ -1,6 +1,6 @@
 # &lt;color-scheme-switch&gt; element
 
-> A custom element to toggle between a light and dark color scheme.
+> A simple custom element to toggle between a light and dark page color scheme.
 
 [![Test status](https://img.shields.io/github/actions/workflow/status/andreruffert/color-scheme-switch-element/test.yml?label=Test&logo=github&color=lightyellow&labelColor=212121)](https://github.com/andreruffert/color-scheme-switch-element/actions/workflows/test.yml)
 [![npm version](https://img.shields.io/npm/v/color-scheme-switch-element?color=lightyellow&labelColor=212121)](https://www.npmjs.com/package/color-scheme-switch-element)

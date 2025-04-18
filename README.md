@@ -6,6 +6,7 @@
 [![npm version](https://img.shields.io/npm/v/color-scheme-switch-element?color=lightyellow&labelColor=212121)](https://www.npmjs.com/package/color-scheme-switch-element)
 [![gzip size](https://img.shields.io/badge/gzip-846B-lightyellow?labelColor=212121)](https://pkg-size.dev/color-scheme-switch-element@latest)
 [![npm downloads](https://img.shields.io/npm/dm/color-scheme-switch-element?logo=npm&color=lightyellow&labelColor=212121)](https://www.npmjs.com/package/color-scheme-switch-element)
+[![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hm/color-scheme-switch-element?color=lightyellow&labelColor=212121)](https://www.jsdelivr.com/package/npm/color-scheme-switch-element)
 
 ## Features
 

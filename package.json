@@ -1,6 +1,6 @@
 {
   "name": "color-scheme-switch-element",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A custom element to toggle between a light and dark color scheme",
   "license": "MIT",
   "funding": "https://github.com/andreruffert/color-scheme-switch-element?sponsor=1",

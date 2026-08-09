@@ -10,9 +10,12 @@
 
 ## Features
 
-- Toggle between a light and dark color scheme
-- Considers system preference
-- Persist user preference
+* Toggle between light and dark color schemes
+* Respects the user's system color-scheme preference
+* Automatically follows system preference changes
+* Persists explicit user choices
+* Keyboard accessible with <kbd>Enter</kbd> and <kbd>Space</kbd>
+* No dependencies
 
 **[Demo](https://andreruffert.github.io/syntax-highlight-element)**
 
@@ -24,61 +27,113 @@ npm install color-scheme-switch-element
 
 ## Usage
 
-### JavaScript
+### Setup
 
 ```html
-<script>
-  // Ensure the event listener is setup before the initial `color-scheme-switch` event gets dispatched.
+<script type="module" async blocking="render">
+  import ColorSchemeSwitchElement from 'color-scheme-switch-element?define=false';
+
+  // Or via CDN
+  // import ColorSchemeSwitchElement from 'https://cdn.jsdelivr.net/npm/color-scheme-switch-element/+esm?define=false';
+
   document.addEventListener('color-scheme-switch', event => {
     const colorScheme = event.target.value;
-
-    // Set the page color scheme e.g
     document.documentElement.style.setProperty('color-scheme', colorScheme);
-    // ...
   });
+
+  // Define the element after the event listener has been registered so
+  // the initial color-scheme-switch event is not missed.
+  ColorSchemeSwitchElement.define();
 </script>
-<script type="module" async blocking="render" src="https://unpkg.com/color-scheme-switch-element@latest/dist/color-scheme-switch-element.js"></script>
 ```
-
-<!--
-Import as ES module:
-
-```js
-import ColorSchemeSwitchElement from 'color-scheme-switch-element?define=false'
-
-// Ensure the event listener is setup before the initial `color-scheme-switch` event gets dispatched.
-document.addEventListener('color-scheme-switch', event => {
-  const colorScheme = event.target.value;
-
-  // Set the page color scheme e.g
-  document.documentElement.style.setProperty('color-scheme', colorScheme);
-  // ...
-});
-
-ColorSchemeSwitchElement.define();
-```
--->
 
 ### Markup
 
 ```html
 <color-scheme-switch title="Toggle light & dark color scheme">
+  <!-- icon, label, etc. -->
+</color-scheme-switch>
+```
+
+The element supports `light` and `dark` color schemes.
+
+You can also provide an initial value declaratively:
+
+```html
+<color-scheme-switch value="dark">
   <!-- ... -->
 </color-scheme-switch>
 ```
 
+### Color scheme preference
+
+The initial value is determined in the following order:
+
+1. A valid persisted user preference from `localStorage`
+2. The `value` attribute
+3. The user's system preference (`prefers-color-scheme`)
+
+The persisted preference is stored under the `color-scheme` localStorage key.
+
+When the user toggles the element, their preference is persisted. If the selected scheme matches the current system preference, the persisted preference is removed so the component can continue following future system preference changes.
+
+If there is no persisted user preference, changes to the system color scheme are automatically reflected by the element.
+
+### Value
+
+The current color scheme is available through the `value` property:
+
+```js
+const colorScheme = element.value;
+
+element.value = 'dark';
+```
+
+Only `light` and `dark` are supported. Assigning any other value throws a `TypeError`.
+
+Changing `value` updates the component state and dispatches a `color-scheme-switch` event. Programmatically assigning `value` does **not** persist the preference; persistence only occurs when the user toggles the element.
+
 ### Events
 
-When initially loaded or after switching the color scheme, a `color-scheme-switch` event is dispatched from the `<color-scheme-switch>` element.
+A `color-scheme-switch` event is dispatched when the element is initialized and whenever its value changes.
 
 ```js
 document.addEventListener('color-scheme-switch', event => {
-  const button = event.target;
-  const colorScheme = event.target.value;
+  const element = event.target;
+  const colorScheme = element.value;
 
   // Set page color scheme, update aria-label, icon, etc.
-})
+});
 ```
+
+The event bubbles, so it can be listened for on `document` or another ancestor.
+
+Assigning the current value does not dispatch an event:
+
+```js
+element.value = element.value;
+```
+
+### Disabled
+
+The element can be disabled using the `disabled` attribute:
+
+```html
+<color-scheme-switch disabled>
+  <!-- ... -->
+</color-scheme-switch>
+```
+
+When disabled, user-triggered toggles are ignored.
+
+### Keyboard interaction
+
+When focused, the element responds to:
+
+* <kbd>Enter</kbd>
+* <kbd>Space</kbd>
+
+The element uses `role="button"` and `tabindex="0"` by default.
 
 ## License
 

@@ -23,13 +23,16 @@
     "build": "vite build",
     "format": "biome check --write",
     "lint": "biome ci",
+    "test": "vitest",
     "prepublishOnly": "npm run build",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   },
   "devDependencies": {
     "@biomejs/biome": "2.1.2",
+    "@vitest/browser-playwright": "4.1.10",
     "conventional-changelog-cli": "5.0.0",
-    "vite": "8.1.0"
+    "vite": "8.1.0",
+    "vitest": "4.1.10"
   },
   "volta": {
     "node": "22.13.1",

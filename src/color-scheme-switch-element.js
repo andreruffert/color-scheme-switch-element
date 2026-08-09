@@ -1,42 +1,64 @@
 const DEFAULT_TAG_NAME = 'color-scheme-switch';
 const DEFAULT_STORAGE_KEY = 'color-scheme';
-const KEY_CODES = [' ', 'Enter'];
+const DARK_COLOR_SCHEME_MEDIA_QUERY = '(prefers-color-scheme: dark)';
+
+const KEY_CODES = new Set([' ', 'Enter']);
+
+const isColorScheme = (value) => value === 'light' || value === 'dark';
 
 export class ColorSchemeSwitchElement extends HTMLElement {
+  /**
+   * Defines the custom element if it hasn't already been defined.
+   *
+   * @param {string} [tagName='color-scheme-switch']
+   * @param {CustomElementRegistry} [registry=customElements]
+   * @returns {typeof ColorSchemeSwitchElement}
+   */
   static define(tagName = DEFAULT_TAG_NAME, registry = customElements) {
     if (!registry.get(tagName)) {
       registry.define(tagName, ColorSchemeSwitchElement);
     }
+
     return ColorSchemeSwitchElement;
   }
 
   #value;
+  #systemPreference;
 
+  /**
+   * The currently active color scheme.
+   *
+   * @returns {'light'|'dark'}
+   */
   get value() {
     return this.#value;
   }
 
-  set value(newPreference) {
-    this.setAttribute('value', newPreference);
-    this.#value = newPreference;
-    localStorage.setItem(DEFAULT_STORAGE_KEY, newPreference);
+  /**
+   * Sets the currently active color scheme.
+   *
+   * @param {'light'|'dark'} value
+   * @throws {TypeError} If the value is not a supported color scheme.
+   */
+  set value(value) {
+    if (!isColorScheme(value)) {
+      throw new TypeError(`Invalid color scheme "${value}". Expected "light" or "dark".`);
+    }
+
+    if (this.#value === value) return;
+
+    this.#value = value;
     this.dispatchEvent(new CustomEvent('color-scheme-switch', { bubbles: true }));
   }
 
-  constructor() {
-    super();
-    this.addEventListener('click', this.toggle);
-    this.addEventListener('focus', this.#focusHandler);
-    this.addEventListener('blur', this.#blurHandler);
-  }
-
   connectedCallback() {
-    const systemColorScheme = this.getSystemColorScheme();
-    const pageColorScheme = this.getPageColorScheme();
-    const isSystem = pageColorScheme === 'light dark';
-    const defaultValue = isSystem ? systemColorScheme : pageColorScheme;
-    const persistedValue = localStorage.getItem(DEFAULT_STORAGE_KEY);
-    this.value = this.getAttribute('value') || persistedValue || defaultValue;
+    this.#systemPreference = window.matchMedia(DARK_COLOR_SCHEME_MEDIA_QUERY);
+    this.#systemPreference.addEventListener('change', this.#systemColorSchemeHandler);
+
+    this.addEventListener('click', this.toggle);
+    this.addEventListener('keydown', this.#keyboardHandler);
+
+    this.value = this.#getInitialValue();
 
     if (!this.hasAttribute('role')) {
       this.setAttribute('role', 'button');
@@ -47,34 +69,86 @@ export class ColorSchemeSwitchElement extends HTMLElement {
     }
   }
 
-  #focusHandler = () => {
-    this.addEventListener('keydown', this.#keyboardHandler);
+  disconnectedCallback() {
+    this.removeEventListener('click', this.toggle);
+    this.removeEventListener('keydown', this.#keyboardHandler);
+
+    this.#systemPreference?.removeEventListener('change', this.#systemColorSchemeHandler);
+    this.#systemPreference = undefined;
+  }
+
+  /**
+   * Toggles between the light and dark color schemes.
+   */
+  toggle = () => {
+    if (this.hasAttribute('disabled')) return;
+
+    const value = this.#value === 'dark' ? 'light' : 'dark';
+    this.value = value;
+    this.#persistValue(value);
   };
 
-  #blurHandler = () => {
-    this.removeEventListener('keydown', this.#keyboardHandler);
-  };
+  /**
+   * Returns the user's current system color scheme preference.
+   *
+   * @returns {'light'|'dark'}
+   */
+  getSystemColorScheme() {
+    return this.#systemPreference.matches ? 'dark' : 'light';
+  }
+
+  /**
+   * Determines the initial color scheme.
+   *
+   * A persisted user preference takes precedence over the declarative
+   * `value` attribute, which falls back to the system preference.
+   *
+   * @returns {'light'|'dark'}
+   */
+  #getInitialValue() {
+    const persistedValue = localStorage.getItem(DEFAULT_STORAGE_KEY);
+
+    if (isColorScheme(persistedValue)) {
+      return persistedValue;
+    }
+
+    const defaultValue = this.getAttribute('value');
+
+    if (isColorScheme(defaultValue)) {
+      return defaultValue;
+    }
+
+    return this.getSystemColorScheme();
+  }
+
+  /**
+   * Persists a user-selected color scheme.
+   *
+   * Preferences matching the system scheme are removed so that
+   * future system changes continue to be followed automatically.
+   *
+   * @param {'light'|'dark'} value
+   */
+  #persistValue(value) {
+    if (value === this.getSystemColorScheme()) {
+      localStorage.removeItem(DEFAULT_STORAGE_KEY);
+    } else {
+      localStorage.setItem(DEFAULT_STORAGE_KEY, value);
+    }
+  }
 
   #keyboardHandler = (event) => {
-    if (!KEY_CODES.includes(event.key)) return;
+    if (!KEY_CODES.has(event.key)) return;
+
     event.preventDefault();
     this.toggle();
   };
 
-  getPageColorScheme() {
-    const computedStyle = window.getComputedStyle(document.documentElement);
-    const pageColorScheme = computedStyle.getPropertyValue('color-scheme');
-    return pageColorScheme;
-  }
+  #systemColorSchemeHandler = (event) => {
+    const persistedValue = localStorage.getItem(DEFAULT_STORAGE_KEY);
 
-  getSystemColorScheme() {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
+    if (isColorScheme(persistedValue)) return;
 
-  toggle() {
-    if (this.disabled) return;
-    const currentPreference = this.#value;
-    const newPreference = currentPreference === 'dark' ? 'light' : 'dark';
-    this.value = newPreference;
-  }
+    this.value = event.matches ? 'dark' : 'light';
+  };
 }

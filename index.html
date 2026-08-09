@@ -7,7 +7,7 @@
     <title>&lt;color-scheme-switch&gt; element</title>
     <style>
       :root {
-        color-scheme: light-dark;
+        color-scheme: light dark;
       }
 
       body {
@@ -29,7 +29,7 @@
         gap: 0.5rem;
       }
     </style>
-    <script type="module" >
+    <script type="module" async blocking="render">
       import { ColorSchemeSwitchElement } from '/src/index.js?define=false'
 
       document.addEventListener('color-scheme-switch', event => {
@@ -50,8 +50,8 @@
     </script>
   </head>
   <body>
-    <color-scheme-switch value="dark" title="Toggle light & dark color scheme">
-      <svg class="icon" width="24" height="24"><use xlink:href="#sun"></use></svg>
+    <color-scheme-switch title="Toggle light & dark color scheme">
+      <svg class="icon" width="24" height="24"><use /></svg>
     </color-scheme-switch>
 
     <svg width="0" height="0" aria-hidden="true" hidden>

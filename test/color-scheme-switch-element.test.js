@@ -1,6 +1,11 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { ColorSchemeSwitchElement } from '../src/color-scheme-switch-element.js';
-import { createMatchMediaController, setPersistedValue, mountElement, createElement } from './utils.js';
+import {
+  createElement,
+  createMatchMediaController,
+  mountElement,
+  setPersistedValue,
+} from './utils.js';
 
 const TAG_NAME = 'test-color-scheme-switch';
 const STORAGE_KEY = 'color-scheme';

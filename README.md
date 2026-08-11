@@ -17,9 +17,11 @@
 * Keyboard accessible with <kbd>Enter</kbd> and <kbd>Space</kbd>
 * No dependencies
 
-**[Demo](https://andreruffert.github.io/syntax-highlight-element)**
+**[Demo](https://andreruffert.github.io/color-scheme-switch-element)**
 
 ## Installation
+
+Install the package from your command line.
 
 ```shell
 npm install color-scheme-switch-element
@@ -27,31 +29,44 @@ npm install color-scheme-switch-element
 
 ## Usage
 
+Add the custom element to your page and listen for the `color-scheme-switch` event. The event provides the currently active color scheme, which you can use to update your page accordingly.
+
 ### Setup
 
+Register the event listener before the custom element is defined. This ensures the initial `color-scheme-switch` event is not missed when the element is registered.
+
 ```html
-<script type="module" async blocking="render">
-  import ColorSchemeSwitchElement from 'color-scheme-switch-element?define=false';
-
-  // Or via CDN
-  // import ColorSchemeSwitchElement from 'https://cdn.jsdelivr.net/npm/color-scheme-switch-element/+esm?define=false';
-
+<script>
   document.addEventListener('color-scheme-switch', event => {
+    // The currently active color scheme.
     const colorScheme = event.target.value;
-    document.documentElement.style.setProperty('color-scheme', colorScheme);
-  });
 
-  // Define the element after the event listener has been registered so
-  // the initial color-scheme-switch event is not missed.
-  ColorSchemeSwitchElement.define();
+    // Apply the active color scheme.
+    document.documentElement.style.setProperty('color-scheme', colorScheme);
+
+    // Update the accessible label to describe the action.
+    event.target.setAttribute('aria-label', `Switch to ${colorScheme === 'light' ? 'dark' : 'light'} color scheme`)
+
+    // ...
+  });
 </script>
 ```
 
+Then load the custom element using a render-blocking module script.
+
+```html
+<script type="module" async blocking="render" src="https://cdn.jsdelivr.net/npm/color-scheme-switch-element/+esm"></script>
+```
+
+The [blocking="render"](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script#blocking_rendering_till_a_script_is_fetched_and_executed) attribute prevents the page from rendering until the custom element has been registered. This helps prevent a flash of the wrong color scheme during page load.
+
 ### Markup
+
+Add the custom element wherever you want the color-scheme switcher to appear.
 
 ```html
 <color-scheme-switch title="Toggle light & dark color scheme">
-  <!-- icon, label, etc. -->
+  <!-- ... -->
 </color-scheme-switch>
 ```
 

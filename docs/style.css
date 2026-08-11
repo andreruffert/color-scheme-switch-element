@@ -15,7 +15,6 @@
     min-block-size: 100dvh;
     font-family: var(--fonts-sans);
     font-weight: 400;
-
   }
 
   :focus-visible {
@@ -77,7 +76,7 @@
 
     syntax-highlight {
       border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
-      border-radius: .5rem;
+      border-radius: 0.5rem;
       padding: var(--spacing-4);
     }
 
@@ -88,7 +87,7 @@
       margin-block-start: var(--spacing-2);
       opacity: 0;
       font-size: small;
-      border-radius: calc(.5rem - var(--spacing-2) / 2);
+      border-radius: calc(0.5rem - var(--spacing-2) / 2);
       background: color-mix(in srgb, var(--canvas) 88%, transparent);
       backdrop-filter: blur(8px);
     }
@@ -134,25 +133,40 @@
     align-items: center;
     gap: var(--spacing-10);
     margin-inline: auto;
-    max-inline-size: var(--sizes-5xl);
+    max-inline-size: var(--sizes-4xl);
     inline-size: var(--sizes-full);
     padding-inline: var(--spacing-4);
     padding-block: var(--spacing-24);
   }
 
-  main article {
-    align-self: stretch;
+  main p {
+    max-width: 60ch;
+    text-wrap: pretty;
+    color: color-mix(in srgb, var(--canvas-text) 75%, transparent);
   }
-  main article > section:first-of-type {
+
+  main article {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    gap: var(--spacing-10);
+  }
+
+  main article:first-of-type {
     display: flex;
     justify-content: center;
     align-items: center;
     min-block-size: 90dvh;
   }
 
+  main article > section:has(section) {
+    display: flex;
+    flex-direction: inherit;
+    gap: inherit;
+  }
+
   footer {
-    background-color: var(--button-face);
-    border-block-start: 1px solid var(--button-face);
+    background: color-mix(in srgb, var(--canvas) 88%, transparent);
     text-align: center;
     font-size: 0.85rem;
     margin-inline: auto;
@@ -233,7 +247,7 @@
 
     --accent: light-dark(#c0c0b0, lightyellow);
     --canvas: light-dark(#ffffff, #242424);
-    --canvas-text: light-dark(#414141, rgba(255, 255, 255, 0.871));
+    --canvas-text: light-dark(#242424, #ffffff);
     --button-face: light-dark(#f9f9f9, #1a1a1a);
     --button-face-muted: light-dark(#fdfdfd, #212121);
   }

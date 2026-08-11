@@ -1,4 +1,4 @@
-import { ColorSchemeSwitchElement } from './color-scheme-switch-element';
+import { ColorSchemeSwitchElement } from './color-scheme-switch-element.js';
 
 export { ColorSchemeSwitchElement };
 export default ColorSchemeSwitchElement;

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>&lt;color-scheme-switch&gt; element</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="author" content="André Ruffert">
+    <meta name="description" content="A simple custom element to toggle between a light and dark page color scheme.">
+    <meta name="keywords" content="dark mode toggle,custom element,web component">
+
+    <meta name="og:title" content="&lt;color-scheme-switch&gt; element">
+    <meta name="og:type" content="website">
+    <meta name="og:url" content="https://andreruffert.github.io/color-scheme-switch-element">
+    <meta property="og:image" content="https://repository-images.githubusercontent.com/939061098/9b852acf-e1bf-4391-9811-91eca4fd29c7">
+    <meta property="og:image:alt" content="💡 A simple custom element to toggle between a light and dark page color scheme - andreruffert/color-scheme-switch-element">
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💡</text></svg>" />
+    <link rel="canonical" href="https://andreruffert.github.io/color-scheme-switch-element">
+    <link rel="stylesheet" href="./style.css">
+
+    <script>
+      // Ensure the event listener is setup before the initial `color-scheme-switch` event gets fired.
+      document.addEventListener('color-scheme-switch', event => {
+        const colorScheme = event.target.value;
+
+        // Update page color-scheme
+        document.documentElement.style.setProperty('color-scheme', colorScheme);
+
+        // Update icon
+        event.target.querySelector('.icon use').setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", `#iconset-${colorScheme === 'light' ? 'sun' : 'moon'}`);
+
+        // Update button label
+        event.target.setAttribute('aria-label', `Switch to ${colorScheme === 'light' ? 'dark' : 'light'} color scheme`)
+      });
+    </script>
+    <script type="module" async blocking="render" src="https://cdn.jsdelivr.net/gh/andreruffert/color-scheme-switch-element@main/src/index.js"></script>
+  </head>
+  <body>
+    <header>
+      <p class="brand">
+        <span aria-hidden="true">💡</span> &lt;color-scheme-switch&gt;
+        <span class="byline">by <a href="https://andreruffert.com" target="_blank" rel="noopener">André Ruffert</a></span>
+      </p>
+      <div class="header-fields">
+        <a class="button" href="https://github.com/andreruffert/color-scheme-switch-element" target="_blank" rel="noopener">
+          <svg class="icon" width="1.1em" height="1.1em" aria-hidden="true"><use xlink:href="#iconset-github"></use></svg>
+          <span>Source</span>
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <article>
+        <section>
+          <color-scheme-switch title="Toggle light & dark color scheme">
+            <svg class="icon" width="32" height="32"><use /></svg>
+          </color-scheme-switch>
+        </section>
+
+        <section>
+          <h2>Installation</h2>
+
+          <div class="copy-code-container">
+            <div class="copy-code">
+              <syntax-highlight id="copy-npm-install">npm install color-scheme-switch-element</syntax-highlight>
+              <clipboard-copy for="copy-npm-install">Copy Code</clipboard-copy>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2>Usage</h2>
+
+          <section>
+            <h3>Setup</h3>
+            <p>Define the event listener before the element has been registered so the initial <code>color-scheme-switch</code> event is not missed.</p>
+          <div class="copy-code">
+              <syntax-highlight id="copy-usage-1" language="html">&lt;script&gt;
+  document.addEventListener('color-scheme-switch', event => {
+    // The currently active color scheme.
+    const colorScheme = event.target.value;
+
+    // React to the active color scheme e.g.
+    document.documentElement.style.setProperty('color-scheme', colorScheme);
+    event.target.setAttribute('aria-label', `Switch to ${colorScheme === 'light' ? 'dark' : 'light'} color scheme`)
+    // ...
+  });
+&lt;/script&gt;</syntax-highlight>
+              <clipboard-copy for="copy-usage-1">Copy Code</clipboard-copy>
+            </div>
+
+             <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script#blocking_rendering_till_a_script_is_fetched_and_executed" target="_parent">Blocking rendering</a> till the element is registered to prevent flash of inactive color scheme.</p>
+            <div class="copy-code">
+              <syntax-highlight id="copy-usage-2" language="html">&lt;script type="module" async blocking="render" src="https://cdn.jsdelivr.net/npm/color-scheme-switch-element/+esm"&gt;&lt;/script&gt;</syntax-highlight>
+              <clipboard-copy for="copy-usage-2">Copy Code</clipboard-copy>
+            </div>
+          </section>
+
+          <section>
+            <h3>Markup</h3>
+            <p>Use the custom element.</p>
+           <div class="copy-code">
+              <syntax-highlight id="copy-usage-3" language="html">&lt;color-scheme-switch title="Toggle light & dark color scheme"&gt;
+  &lt;!-- ... --&gt;
+&lt;/color-scheme-switch&gt;</syntax-highlight>
+              <clipboard-copy for="copy-usage-3">Copy Code</clipboard-copy>
+            </div>
+          </section>
+
+        </section>
+      </article>
+    </main>
+
+    <footer>
+      <p>An <a href="https://github.com/andreruffert" target="_blank" rel="noreferrer">open source</a> project by <a href="https://andreruffert.com" target="_blank">André Ruffert</a> ©.</p>
+      <p>Released under the MIT License.</p>
+    </footer>
+
+    <svg width="0" height="0" aria-hidden="true" hidden="">
+      <symbol id="iconset-sun" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="m4.93 4.93 1.41 1.41"></path>
+        <path d="m17.66 17.66 1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="m6.34 17.66-1.41 1.41"></path>
+        <path d="m19.07 4.93-1.41 1.41"></path>
+      </symbol>
+      <symbol id="iconset-moon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+      </symbol>
+      <symbol id="iconset-github" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.09 3.29 9.4 7.86 10.93.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.11-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.71 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.77.12 3.06.74.81 1.18 1.84 1.18 3.1 0 4.44-2.7 5.42-5.27 5.7.41.36.78 1.06.78 2.14 0 1.55-.01 2.79-.01 3.17 0 .3.2.66.79.55A10.51 10.51 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"></path>
+      </symbol>
+    </svg>
+
+    <script type="module">
+      import 'https://cdn.jsdelivr.net/npm/syntax-highlight-element@1.0.0/+esm';
+      import 'https://cdn.jsdelivr.net/npm/@github/clipboard-copy-element@1.3.0/+esm';
+
+      document.addEventListener('clipboard-copy', event => {
+        const button = event.target;
+        const defaultContent = button.textContent;
+        button.textContent = 'Copied Code'
+        setTimeout(() => {
+          button.textContent = defaultContent;
+        }, 1800);
+      });
+    </script>
+  </body>
+</html>

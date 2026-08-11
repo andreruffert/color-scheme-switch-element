@@ -52,15 +52,20 @@
 
     <main>
       <article>
-        <section>
-          <color-scheme-switch title="Toggle light & dark color scheme">
-            <svg class="icon" width="32" height="32"><use /></svg>
-          </color-scheme-switch>
-        </section>
+        <color-scheme-switch title="Toggle light & dark color scheme">
+          <svg class="icon" width="32" height="32"><use /></svg>
+        </color-scheme-switch>
+      </article>
+
+      <article>
+        <div>
+          <h1>Getting Started</h1>
+          <p>The <code>&lt;color-scheme-switch&gt;</code> custom element provides a UI for switching between light and dark color schemes.</p>
+        </div>
 
         <section>
           <h2>Installation</h2>
-
+          <p>Install the package from your command line.</p>
           <div class="copy-code-container">
             <div class="copy-code">
               <syntax-highlight id="copy-npm-install">npm install color-scheme-switch-element</syntax-highlight>
@@ -69,37 +74,43 @@
           </div>
         </section>
         <section>
-          <h2>Usage</h2>
-
+          <div>
+            <h2>Usage</h2>
+            <p>Add the custom element to your page and listen for the <code>color-scheme-switch</code> event. The event provides the currently active color scheme, which you can use to update your page accordingly.</p>
+          </div>
           <section>
             <h3>Setup</h3>
-            <p>Define the event listener before the element has been registered so the initial <code>color-scheme-switch</code> event is not missed.</p>
+            <p>Register the event listener before the custom element is defined. This ensures the initial <code>color-scheme-switch</code> event is not missed when the element is registered.</p>
           <div class="copy-code">
               <syntax-highlight id="copy-usage-1" language="html">&lt;script&gt;
   document.addEventListener('color-scheme-switch', event => {
     // The currently active color scheme.
     const colorScheme = event.target.value;
 
-    // React to the active color scheme e.g.
+    // Apply the active color scheme.
     document.documentElement.style.setProperty('color-scheme', colorScheme);
+
+    // Update the accessible label to describe the action.
     event.target.setAttribute('aria-label', `Switch to ${colorScheme === 'light' ? 'dark' : 'light'} color scheme`)
+
     // ...
   });
 &lt;/script&gt;</syntax-highlight>
               <clipboard-copy for="copy-usage-1">Copy Code</clipboard-copy>
             </div>
 
-             <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script#blocking_rendering_till_a_script_is_fetched_and_executed" target="_parent">Blocking rendering</a> till the element is registered to prevent flash of inactive color scheme.</p>
+            <p>Then load the custom element using a render-blocking module script.</p>
             <div class="copy-code">
               <syntax-highlight id="copy-usage-2" language="html">&lt;script type="module" async blocking="render" src="https://cdn.jsdelivr.net/npm/color-scheme-switch-element/+esm"&gt;&lt;/script&gt;</syntax-highlight>
               <clipboard-copy for="copy-usage-2">Copy Code</clipboard-copy>
             </div>
+            <p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script#blocking_rendering_till_a_script_is_fetched_and_executed" target="_parent"><code>blocking="render"</code></a> attribute prevents the page from rendering until the custom element has been registered. This helps prevent a flash of the wrong color scheme during page load.</p>
           </section>
 
           <section>
             <h3>Markup</h3>
-            <p>Use the custom element.</p>
-           <div class="copy-code">
+            <p>Add the custom element wherever you want the color-scheme switcher to appear.</p>
+            <div class="copy-code">
               <syntax-highlight id="copy-usage-3" language="html">&lt;color-scheme-switch title="Toggle light & dark color scheme"&gt;
   &lt;!-- ... --&gt;
 &lt;/color-scheme-switch&gt;</syntax-highlight>

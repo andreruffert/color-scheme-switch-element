@@ -98,6 +98,11 @@
     opacity: 1;
   }
 
+  color-scheme-switch {
+    aspect-ratio: 1;
+    padding: var(--spacing-3) !important;
+  }
+
   header {
     display: flex;
     align-items: center;
@@ -136,7 +141,7 @@
     max-inline-size: var(--sizes-4xl);
     inline-size: var(--sizes-full);
     padding-inline: var(--spacing-4);
-    padding-block: var(--spacing-24);
+    padding-block-end: var(--spacing-24);
   }
 
   main p {
@@ -178,12 +183,6 @@
       margin: 0;
       margin-block-end: var(--spacing-2);
     }
-  }
-
-  color-scheme-switch {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
   }
 }
 

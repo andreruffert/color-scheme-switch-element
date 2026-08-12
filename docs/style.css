@@ -104,7 +104,7 @@
   header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: wrap;
     gap: var(--spacing-5);
     position: sticky;
@@ -141,7 +141,6 @@
       display: flex;
       flex-wrap: wrap;
       gap: var(--spacing-5);
-      width: 100%;
 
       a {
         color: inherit;
@@ -149,7 +148,6 @@
         align-items: center;
         gap: var(--spacing-2);
         text-wrap: nowrap;
-        width: inherit;
       }
 
       a span {
@@ -157,15 +155,13 @@
       }
     }
   }
-
-  @container (min-width: 460px) {
-    header .header-links {
-      flex: initial;
-      margin-inline-start: auto;
-      width: initial;
+  @container (min-width: 400px) {
+    header .brand [aria-hidden="true"] {
+      display: initial;
     }
+  }
 
-    header .brand [aria-hidden="true"],
+  @container (min-width: 520px) {
     header .byline,
     header .header-links a span {
       display: initial;

@@ -11,27 +11,38 @@
 
     <meta name="og:title" content="&lt;color-scheme-switch&gt; element">
     <meta name="og:type" content="website">
-    <meta name="og:url" content="https://andreruffert.github.io/color-scheme-switch-element">
+    <meta name="og:url" content="https://andreruffert.github.io/color-scheme-switch-element/">
     <meta property="og:image" content="https://repository-images.githubusercontent.com/939061098/9b852acf-e1bf-4391-9811-91eca4fd29c7">
     <meta property="og:image:alt" content="💡 A simple custom element to toggle between a light and dark page color scheme - andreruffert/color-scheme-switch-element">
 
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💡</text></svg>" />
-    <link rel="canonical" href="https://andreruffert.github.io/color-scheme-switch-element">
+    <link rel="canonical" href="https://andreruffert.github.io/color-scheme-switch-element/">
     <link rel="stylesheet" href="./style.css">
 
     <script>
       // Ensure the event listener is setup before the initial `color-scheme-switch` event gets fired.
       document.addEventListener('color-scheme-switch', event => {
         const colorScheme = event.target.value;
+        const target = event.target;
 
-        // Update page color-scheme
-        document.documentElement.style.setProperty('color-scheme', colorScheme);
+        const updatedUI = () => {
+          // Update page color-scheme
+          document.documentElement.style.setProperty('color-scheme', colorScheme);
 
-        // Update icon
-        event.target.querySelector('.icon use').setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", `#iconset-${colorScheme === 'light' ? 'sun' : 'moon'}`);
+          // Update icon
+          target.querySelector('.icon use').setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", `#iconset-${colorScheme === 'light' ? 'sun' : 'moon'}`);
+        }
+
+        if (document.documentElement.style.getPropertyValue('color-scheme')) {
+          document.startViewTransition(updatedUI)
+        } else {
+          updatedUI()
+        }
+
+
 
         // Update button label
-        event.target.setAttribute('aria-label', `Switch to ${colorScheme === 'light' ? 'dark' : 'light'} color scheme`)
+        target.setAttribute('aria-label', `Switch to ${colorScheme === 'light' ? 'dark' : 'light'} color scheme`)
       });
     </script>
     <script type="module" async blocking="render" src="https://cdn.jsdelivr.net/gh/andreruffert/color-scheme-switch-element@main/src/index.js"></script>
@@ -42,19 +53,22 @@
         <span aria-hidden="true">💡</span> &lt;color-scheme-switch&gt;
         <span class="byline">by <a href="https://andreruffert.com" target="_blank" rel="noopener">André Ruffert</a></span>
       </p>
-      <div class="header-fields">
+      <div class="header-links">
         <a class="button" href="https://github.com/andreruffert/color-scheme-switch-element" target="_blank" rel="noopener">
           <svg class="icon" width="1.1em" height="1.1em" aria-hidden="true"><use xlink:href="#iconset-github"></use></svg>
-          <span>Source</span>
+          <span>Source on GitHub</span>
         </a>
       </div>
     </header>
 
     <main>
       <article>
+        <h1>Live demo</h1>
         <color-scheme-switch title="Toggle light & dark color scheme">
           <svg class="icon" width="24" height="24"><use /></svg>
         </color-scheme-switch>
+
+
       </article>
 
       <article>
@@ -62,6 +76,17 @@
           <h1>Getting Started</h1>
           <p>The <code>&lt;color-scheme-switch&gt;</code> custom element provides a UI for switching between light and dark color schemes.</p>
         </div>
+
+         <section>
+          <h2>Features</h2>
+          <ul>
+            <li>Toggle between light and dark color schemes</li>
+            <li>Respects the user's system color-scheme preference</li>
+            <li>Automatically follows system preference changes</li>
+            <li>Persists explicit user choices</li>
+            <li>Keyboard accessible with <kbd>Enter</kbd> and <kbd>Space</kbd></li>
+          </ul>
+        </section>
 
         <section>
           <h2>Installation</h2>

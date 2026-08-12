@@ -66,8 +66,6 @@
 
   .copy-code {
     display: grid;
-    inline-size: 0;
-    min-inline-size: 100%;
     margin-block: var(--spacing-10);
 
     > * {
@@ -106,29 +104,71 @@
   header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 1rem;
-    padding: 1rem clamp(1rem, 4vw, 2rem);
-    border-bottom: 1px solid var(--line);
+    gap: var(--spacing-5);
     position: sticky;
     top: 0;
-    background: color-mix(in srgb, var(--canvas) 88%, transparent);
+    background-color: color-mix(in srgb, var(--canvas) 88%, transparent);
     backdrop-filter: blur(8px);
+    padding: var(--spacing-6) var(--spacing-4);
+    /* padding: 1rem clamp(1rem, 4vw, 2rem); */
+    container-type: inline-size;
 
     .brand {
       margin: unset;
       font-weight: 700;
       letter-spacing: -0.01em;
+      text-wrap: nowrap;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: var(--spacing-2);
+    }
+
+    .brand [aria-hidden="true"],
+    .byline {
+      display: none;
     }
 
     .byline {
       font-weight: 400;
       font-size: 0.8rem;
       color: var(--muted);
+    }
+
+    .header-links {
+      font-size: 0.9rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-5);
+      width: 100%;
+
+      a {
+        color: inherit;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--spacing-2);
+        text-wrap: nowrap;
+        width: inherit;
+      }
+
+      a span {
+        display: none;
+      }
+    }
+  }
+
+  @container (min-width: 460px) {
+    header .header-links {
+      flex: initial;
+      margin-inline-start: auto;
+      width: initial;
+    }
+
+    header .brand [aria-hidden="true"],
+    header .byline,
+    header .header-links a span {
+      display: initial;
     }
   }
 
@@ -162,6 +202,15 @@
     justify-content: center;
     align-items: center;
     min-block-size: 90dvh;
+    flex-direction: column-reverse;
+
+    h1 {
+      font-size: smaller;
+      font-weight: 500;
+      text-transform: capitalize;
+      margin: unset;
+      color: color-mix(in srgb, var(--canvas-text) 75%, transparent);
+    }
   }
 
   main article > section:has(section) {
@@ -254,9 +303,9 @@
 
 @layer syntax-highlight-element {
   syntax-highlight {
-    --mono-bg: light-dark(#ffffff, #000000);
+    --mono-bg: light-dark(#fdfdfd, #000000);
     --mono-fg: light-dark(#111111, #ffffff);
-    --mono-comment: light-dark(#070505, #666666);
+    --mono-comment: light-dark(#a7a7a7, #666666);
     --mono-constant: light-dark(#666666, #a7a7a7);
     --mono-entity: light-dark(#111111, #ffffff);
     --mono-entity-tag: light-dark(#666666, #a7a7a7);
@@ -283,9 +332,9 @@
     color: var(--mono-fg);
     background-color: var(--mono-bg);
 
-    /* border: 1px solid light-dark(#e4e0d8, #262626);
-    border-radius: 10px;
-    padding: 1rem 1.1rem; */
+    /* Fallback for browsers without logical overscroll support (Safari) */
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
   }
 
   ::highlight(punctuation),

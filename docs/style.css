@@ -184,10 +184,16 @@
     padding-block-end: var(--spacing-24);
   }
 
-  main p {
+  main p,
+  main ul {
     max-width: 60ch;
     text-wrap: pretty;
     color: color-mix(in srgb, var(--canvas-text) 75%, transparent);
+    line-height: 1.5;
+  }
+
+  main ul {
+    padding-inline-start: var(--spacing-4);
   }
 
   main article {
